@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CryptoPet</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #fff0f5;
       color: #4b004b;
       height: 100vh;
-      overflow: hidden;
     }
 
-    /* Pantalla de carga */
+    /* --- Pantalla de carga --- */
     #loading-screen {
       position: fixed;
       inset: 0;
@@ -27,9 +30,9 @@
     }
 
     #loading-screen img {
-      max-width: 300px;
+      width: 260px;
+      border-radius: 15px;
       margin-bottom: 20px;
-      border-radius: 12px;
     }
 
     .loading-bar {
@@ -44,7 +47,7 @@
       height: 100%;
       width: 0%;
       background: #ff69b4;
-      animation: fillBar 3s ease-in-out forwards;
+      animation: fillBar 2.5s ease-in-out forwards;
     }
 
     @keyframes fillBar {
@@ -53,18 +56,37 @@
       }
     }
 
-    /* Contenido de la app (inicialmente oculto) */
+    /* --- App Principal --- */
     .main {
       display: none;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      justify-content: space-between;
       height: 100vh;
+      padding: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      display: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .tab.active {
+      display: block;
     }
 
     .pet-img img {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
+    }
+
+    .upgrade-section {
+      background: #ffe6f0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 10px;
     }
 
     button {
@@ -77,13 +99,6 @@
       cursor: pointer;
     }
 
-    .upgrade-section {
-      background: #ffe6f0;
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-
     .nav {
       display: flex;
       justify-content: space-around;
@@ -91,8 +106,6 @@
       background-color: #fff;
       padding: 10px 0;
       width: 100%;
-      position: absolute;
-      bottom: 0;
     }
 
     .nav button {
@@ -101,14 +114,6 @@
       font-weight: bold;
       border: none;
       font-size: 16px;
-    }
-
-    .tab {
-      display: none;
-    }
-
-    .tab.active {
-      display: block;
     }
   </style>
 </head>
@@ -147,6 +152,7 @@
       <p>Aquí irán tus logros, nombre y medallas.</p>
     </div>
 
+    <!-- Navegación -->
     <div class="nav">
       <button onclick="showTab('pet')">Pet</button>
       <button onclick="showTab('inventario')">Inventario</button>
@@ -155,12 +161,12 @@
   </div>
 
   <script>
-    // Simula carga y muestra la app
+    // Mostrar app después de cargar
     window.onload = () => {
       setTimeout(() => {
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('mainApp').style.display = 'flex';
-      }, 3000); // Espera 3 segundos
+      }, 3000); // Tiempo de carga simulado
     };
 
     // Evolución
@@ -190,7 +196,7 @@
       }, 2000);
     }
 
-    // Navegación
+    // Tabs
     function showTab(tabName) {
       document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
