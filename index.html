@@ -5,19 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CryptoPet</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fff0f5;
-      color: #4b004b;
+      background: url('img/forest-bg.jpg') center center / cover no-repeat fixed;
+      color: #fff;
       height: 100vh;
     }
 
-    /* --- Pantalla de carga --- */
+    /* Pantalla de carga */
     #loading-screen {
       position: fixed;
       inset: 0;
@@ -32,7 +30,7 @@
     #loading-screen img {
       width: 260px;
       border-radius: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 40px;
     }
 
     .loading-bar {
@@ -41,6 +39,8 @@
       background: #ffe0ec;
       border-radius: 5px;
       overflow: hidden;
+      margin-top: auto;
+      margin-bottom: 60px;
     }
 
     .loading-fill {
@@ -51,12 +51,10 @@
     }
 
     @keyframes fillBar {
-      to {
-        width: 100%;
-      }
+      to { width: 100%; }
     }
 
-    /* --- App Principal --- */
+    /* App Principal */
     .main {
       display: none;
       flex-direction: column;
@@ -64,6 +62,7 @@
       justify-content: space-between;
       height: 100vh;
       padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
     }
 
     .tab {
@@ -83,10 +82,11 @@
     }
 
     .upgrade-section {
-      background: #ffe6f0;
+      background: rgba(255, 255, 255, 0.1);
       padding: 15px;
       border-radius: 10px;
       margin-top: 10px;
+      backdrop-filter: blur(5px);
     }
 
     button {
@@ -103,14 +103,15 @@
       display: flex;
       justify-content: space-around;
       border-top: 2px solid #ffcce0;
-      background-color: #fff;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
       padding: 10px 0;
       width: 100%;
     }
 
     .nav button {
       background: none;
-      color: #cc0077;
+      color: #ffe0f7;
       font-weight: bold;
       border: none;
       font-size: 16px;
@@ -121,7 +122,7 @@
 
   <!-- Pantalla de carga -->
   <div id="loading-screen">
-    <img src="img/loading.png" alt="Cargando..." />
+    <img src="img/loading.jpg" alt="Cargando..." />
     <div class="loading-bar">
       <div class="loading-fill"></div>
     </div>
@@ -130,7 +131,7 @@
   <!-- App principal -->
   <div class="main" id="mainApp">
     <div class="tab active" id="tab-pet">
-      <h1>Tu CryptoPet</h1>
+      <h1>Santuario de Criaturas</h1>
       <div class="pet-img">
         <img id="petImage" src="img/pet1.png" alt="Pet" />
       </div>
@@ -154,22 +155,20 @@
 
     <!-- Navegación -->
     <div class="nav">
-      <button onclick="showTab('pet')">Pet</button>
+      <button onclick="showTab('pet')">Lobby</button>
       <button onclick="showTab('inventario')">Inventario</button>
       <button onclick="showTab('perfil')">Perfil</button>
     </div>
   </div>
 
   <script>
-    // Mostrar app después de cargar
     window.onload = () => {
       setTimeout(() => {
         document.getElementById('loading-screen').style.display = 'none';
         document.getElementById('mainApp').style.display = 'flex';
-      }, 3000); // Tiempo de carga simulado
+      }, 3000);
     };
 
-    // Evolución
     let currentStage = 0;
     const stages = [
       { src: "img/pet1.png", texto: "Tu criatura está en fase básica." },
@@ -196,7 +195,6 @@
       }, 2000);
     }
 
-    // Tabs
     function showTab(tabName) {
       document.querySelectorAll('.tab').forEach(tab => {
         tab.classList.remove('active');
