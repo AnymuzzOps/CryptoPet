@@ -15,10 +15,10 @@
     body {
       font-family: 'Comic Neue', cursive;
       background: url('img/forest-bg.jpg') center center / cover no-repeat fixed;
+      background-color: #0a000a; /* fallback */
       color: #4b004b;
       height: 100vh;
       overflow-x: hidden;
-      background-color: #0a000a; /* fondo exterior oscuro */
     }
 
     /* Pantalla de carga */
@@ -92,12 +92,15 @@
       top: 10px;
       right: 10px;
       display: flex;
-      gap: 10px;
+      gap: 16px;
     }
 
     .top-bar button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: rgba(255, 255, 255, 0.4);
-      border: none;
+      border: 2px solid #ffb6d6;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -118,11 +121,16 @@
       display: block;
     }
 
+    #title {
+      color: #ff6ec7;
+      text-shadow: 1px 1px 2px #000;
+      margin-bottom: 15px;
+    }
+
     .pet-img img {
       width: 260px;
-      height: auto;
       border-radius: 12px;
-      box-shadow: 0 0 25px rgba(255, 200, 255, 0.6);
+      box-shadow: 0 0 25px rgba(255, 200, 255, 0.7);
       transition: transform 0.3s ease;
     }
 
@@ -134,7 +142,7 @@
       background: linear-gradient(145deg, #ffe4f0, #ffd6ec);
       padding: 20px;
       border-radius: 16px;
-      margin-top: 10px;
+      margin-top: 20px;
       box-shadow: inset 0 0 10px rgba(255, 150, 200, 0.2);
     }
 
@@ -171,10 +179,12 @@
 
     .nav button {
       background: #ffe6f2;
+      color: #8b0057;
       border: 2px solid #ffb6d6;
       border-radius: 20px;
       padding: 10px 14px;
       font-size: 14px;
+      font-weight: bold;
       box-shadow: inset 0 -4px 0 #fbaac2;
     }
 
