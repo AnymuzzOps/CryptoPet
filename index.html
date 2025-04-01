@@ -14,40 +14,6 @@
       color: #fff;
       height: 100vh;
     }
-.main {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100vh;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.4);
-  max-width: 500px;
-  margin: 0 auto;
-  border-radius: 20px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-}
-
-.tab {
-  flex: 1;
-  display: none;
-  width: 100%;
-  text-align: center;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-around;
-  border-top: 2px solid #ffcce0;
-  background-color: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  padding: 10px 0;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  border-radius: 12px 12px 0 0;
-}
 
     /* Pantalla de carga */
     #loading-screen {
@@ -88,7 +54,7 @@
       to { width: 100%; }
     }
 
-    /* App Principal */
+    /* Contenedor principal con paredes laterales */
     .main {
       display: none;
       flex-direction: column;
@@ -97,6 +63,11 @@
       height: 100vh;
       padding: 20px;
       background: rgba(0, 0, 0, 0.4);
+      max-width: 500px;
+      margin: 0 auto;
+      border-radius: 20px;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     }
 
     .tab {
@@ -113,6 +84,7 @@
     .pet-img img {
       width: 140px;
       height: 140px;
+      border-radius: 12px;
     }
 
     .upgrade-section {
@@ -141,6 +113,9 @@
       backdrop-filter: blur(10px);
       padding: 10px 0;
       width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      border-radius: 12px 12px 0 0;
     }
 
     .nav button {
