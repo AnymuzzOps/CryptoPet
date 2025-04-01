@@ -51,11 +51,26 @@
       text-align: center;
       font-size: 1.2rem;
     }
+
+    .world-id {
+      margin-top: 20px;
+    }
   </style>
+  <script src="https://developer.worldcoin.org/sdk/world-id.js"></script>
 </head>
 <body>
 
   <h1>I'M RICH</h1>
+
+  <div class="world-id">
+    <div
+      id="world-id-container"
+      data-action-id="your-action-id"
+      data-signal="rich-user"
+      data-telemetry="true"
+    ></div>
+  </div>
+
   <button class="rich-button" onclick="showCertificate()">BUY FOR $999</button>
 
   <div class="certificate" id="certificate">
@@ -66,6 +81,23 @@
   </div>
 
   <script>
+    window.onload = function () {
+      window.worldID.init("world-id-container", {
+        enableTelemetry: true,
+        action_id: "your-action-id",
+        signal: "rich-user",
+        onSuccess: (result) => {
+          console.log("World ID verification success:", result);
+          document.querySelector('.rich-button').disabled = false;
+        },
+        onError: (error) => {
+          console.error("World ID verification failed:", error);
+        }
+      });
+
+      document.querySelector('.rich-button').disabled = true;
+    };
+
     function showCertificate() {
       document.getElementById('certificate').style.display = 'block';
     }
