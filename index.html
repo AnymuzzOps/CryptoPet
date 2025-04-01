@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +16,7 @@
             height: 100vh;
             margin: 0;
         }
+
         .container {
             text-align: center;
             max-width: 400px;
@@ -24,12 +25,14 @@
             border: 2px solid #333;
             border-radius: 10px;
         }
+
         .pet-img img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             margin: 20px auto;
             display: block;
         }
+
         button {
             padding: 10px 20px;
             margin: 10px;
@@ -39,9 +42,11 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
         button:hover {
             background-color: #666;
         }
+
         .upgrade-section {
             margin-top: 20px;
             background: #2a2a2a;
@@ -54,9 +59,9 @@
     <div class="container">
         <h1>Tu Criatura del Orbe</h1>
         <div class="pet-img">
-            <img id="petImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Glowing_alien_pet.svg/800px-Glowing_alien_pet.svg.png" alt="Pet">
+            <img id="petImage" src="img/pet1.png" alt="Pet">
         </div>
-        <p>Tu criatura está en fase básica.</p>
+        <p id="petStage">Tu criatura está en fase básica.</p>
         <div class="upgrade-section">
             <p>Para evolucionar necesitas 1 Orbe Vital</p>
             <button onclick="buyOrb()">Comprar Orbe (0.5 WLD)</button>
@@ -65,12 +70,30 @@
     </div>
 
     <script>
+        let currentStage = 0;
+        const stages = [
+            { src: "img/pet1.png", texto: "Tu criatura está en fase básica." },
+            { src: "img/pet2.png", texto: "¡Tu criatura ha evolucionado a fase media!" },
+            { src: "img/pet3.png", texto: "¡Tu criatura alcanzó su forma final!" }
+        ];
+
         function buyOrb() {
-            document.getElementById('status').innerHTML = "Redirigiendo a pago con World App...";
-            // Aquí iría la integración real con World App / Wallet
+            const status = document.getElementById('status');
+            const petImage = document.getElementById('petImage');
+            const petStage = document.getElementById('petStage');
+
+            if (currentStage >= stages.length - 1) {
+                status.innerHTML = "⚠️ Tu criatura ya está en su forma final.";
+                return;
+            }
+
+            status.innerHTML = "Redirigiendo a pago con World App...";
+
             setTimeout(() => {
-                document.getElementById('status').innerHTML = "¡Orbe comprado! Tu criatura ha evolucionado.";
-                document.getElementById('petImage').src = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Fantasy_alien_pet.svg/800px-Fantasy_alien_pet.svg.png";
+                currentStage++;
+                petImage.src = stages[currentStage].src;
+                petStage.innerHTML = stages[currentStage].texto;
+                status.innerHTML = "¡Orbe comprado! Tu criatura ha evolucionado.";
             }, 2000);
         }
     </script>
