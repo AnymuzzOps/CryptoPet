@@ -1,101 +1,186 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoPet</title>
-    <style>
-        body {
-            background-color: #0f0f0f;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CryptoPet</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff0f5;
+      color: #4b004b;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        .container {
-            text-align: center;
-            max-width: 400px;
-            padding: 20px;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            border-radius: 10px;
-        }
+    #splash {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #fff0f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
 
-        .pet-img img {
-            width: 120px;
-            height: 120px;
-            margin: 20px auto;
-            display: block;
-        }
+    #splash img {
+      width: 200px;
+    }
 
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            background-color: #444;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .main {
+      flex: 1;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      text-align: center;
+    }
 
-        button:hover {
-            background-color: #666;
-        }
+    .pet-img img {
+      width: 120px;
+      height: 120px;
+      margin: 20px auto;
+      display: block;
+    }
 
-        .upgrade-section {
-            margin-top: 20px;
-            background: #2a2a2a;
-            padding: 10px;
-            border-radius: 8px;
-        }
-    </style>
+    button {
+      padding: 10px 20px;
+      background-color: #ff70a6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+    }
+
+    button:hover {
+      background-color: #ff5293;
+    }
+
+    .upgrade-section {
+      background: #ffe6f0;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    #status {
+      margin-top: 10px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-around;
+      border-top: 2px solid #ffcce0;
+      background-color: #fff;
+      padding: 10px 0;
+    }
+
+    .nav button {
+      background: none;
+      color: #cc0077;
+      font-weight: bold;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .tab {
+      display: none;
+    }
+
+    .tab.active {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Tu Criatura del Orbe</h1>
-        <div class="pet-img">
-            <img id="petImage" src="img/pet1.png" alt="Pet">
-        </div>
-        <p id="petStage">Tu criatura está en fase básica.</p>
-        <div class="upgrade-section">
-            <p>Para evolucionar necesitas 1 Orbe Vital</p>
-            <button onclick="buyOrb()">Comprar Orbe (0.5 WLD)</button>
-        </div>
-        <div id="status"></div>
+
+  <!-- Pantalla de bienvenida -->
+  <div id="splash">
+    <img src="img/splash.png" alt="Bienvenida a CryptoPet" />
+  </div>
+
+  <!-- App principal -->
+  <div class="main" id="mainApp">
+    <div class="tab active" id="tab-pet">
+      <h1>Tu CryptoPet</h1>
+      <div class="pet-img">
+        <img id="petImage" src="img/pet1.png" alt="Pet" />
+      </div>
+      <p id="petStage">Tu criatura está en fase básica.</p>
+      <div class="upgrade-section">
+        <p>Para evolucionar necesitas 1 Orbe Vital</p>
+        <button onclick="buyOrb()">Comprar Orbe (0.5 WLD)</button>
+      </div>
+      <div id="status"></div>
     </div>
 
-    <script>
-        let currentStage = 0;
-        const stages = [
-            { src: "img/pet1.png", texto: "Tu criatura está en fase básica." },
-            { src: "img/pet2.png", texto: "¡Tu criatura ha evolucionado a fase media!" },
-            { src: "img/pet3.png", texto: "¡Tu criatura alcanzó su forma final!" }
-        ];
+    <div class="tab" id="tab-inventario">
+      <h2>Inventario</h2>
+      <p>¡Pronto podrás ver tus objetos mágicos!</p>
+    </div>
 
-        function buyOrb() {
-            const status = document.getElementById('status');
-            const petImage = document.getElementById('petImage');
-            const petStage = document.getElementById('petStage');
+    <div class="tab" id="tab-perfil">
+      <h2>Tu Perfil</h2>
+      <p>¡Aquí irán tus logros, nombre y medallas!</p>
+    </div>
 
-            if (currentStage >= stages.length - 1) {
-                status.innerHTML = "⚠️ Tu criatura ya está en su forma final.";
-                return;
-            }
+    <!-- Navegación inferior -->
+    <div class="nav">
+      <button onclick="showTab('pet')">Pet</button>
+      <button onclick="showTab('inventario')">Inventario</button>
+      <button onclick="showTab('perfil')">Perfil</button>
+    </div>
+  </div>
 
-            status.innerHTML = "Redirigiendo a pago con World App...";
+  <script>
+    // Splash de bienvenida
+    window.onload = () => {
+      setTimeout(() => {
+        document.getElementById('splash').style.display = 'none';
+        document.getElementById('mainApp').style.display = 'flex';
+      }, 2000); // 2 segundos de bienvenida
+    };
 
-            setTimeout(() => {
-                currentStage++;
-                petImage.src = stages[currentStage].src;
-                petStage.innerHTML = stages[currentStage].texto;
-                status.innerHTML = "¡Orbe comprado! Tu criatura ha evolucionado.";
-            }, 2000);
-        }
-    </script>
+    // Evolución de pet
+    let currentStage = 0;
+    const stages = [
+      { src: "img/pet1.png", texto: "Tu criatura está en fase básica." },
+      { src: "img/pet2.png", texto: "¡Tu criatura ha evolucionado a fase media!" },
+      { src: "img/pet3.png", texto: "¡Tu criatura alcanzó su forma final!" }
+    ];
+
+    function buyOrb() {
+      const status = document.getElementById('status');
+      const petImage = document.getElementById('petImage');
+      const petStage = document.getElementById('petStage');
+
+      if (currentStage >= stages.length - 1) {
+        status.innerHTML = "⚠️ Tu criatura ya está en su forma final.";
+        return;
+      }
+
+      status.innerHTML = "Procesando compra...";
+      setTimeout(() => {
+        currentStage++;
+        petImage.src = stages[currentStage].src;
+        petStage.innerHTML = stages[currentStage].texto;
+        status.innerHTML = "¡Orbe comprado!";
+      }, 2000);
+    }
+
+    // Navegación por pestañas
+    function showTab(tabName) {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.getElementById('tab-' + tabName).classList.add('active');
+    }
+  </script>
 </body>
 </html>
