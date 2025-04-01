@@ -24,11 +24,11 @@
             border: 2px solid #333;
             border-radius: 10px;
         }
-        .pet-img {
+        .pet-img img {
             width: 100px;
             height: 100px;
             margin: 20px auto;
-            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Glowing_alien_pet.svg/800px-Glowing_alien_pet.svg.png') center/contain no-repeat;
+            display: block;
         }
         button {
             padding: 10px 20px;
@@ -53,7 +53,9 @@
 <body>
     <div class="container">
         <h1>Tu Criatura del Orbe</h1>
-        <div class="pet-img"></div>
+        <div class="pet-img">
+            <img id="petImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Glowing_alien_pet.svg/800px-Glowing_alien_pet.svg.png" alt="Pet">
+        </div>
         <p>Tu criatura está en fase básica.</p>
         <div class="upgrade-section">
             <p>Para evolucionar necesitas 1 Orbe Vital</p>
@@ -68,7 +70,7 @@
             // Aquí iría la integración real con World App / Wallet
             setTimeout(() => {
                 document.getElementById('status').innerHTML = "¡Orbe comprado! Tu criatura ha evolucionado.";
-                document.querySelector('.pet-img').style.background = "url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Fantasy_alien_pet.svg/800px-Fantasy_alien_pet.svg.png') center/contain no-repeat";
+                document.getElementById('petImage').src = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Fantasy_alien_pet.svg/800px-Fantasy_alien_pet.svg.png";
             }, 2000);
         }
     </script>
