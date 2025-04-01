@@ -11,7 +11,7 @@
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: url('img/forest-bg.jpg') center center / cover no-repeat fixed;
-      color: #fff;
+      color: #4b004b;
       height: 100vh;
     }
 
@@ -19,7 +19,7 @@
     #loading-screen {
       position: fixed;
       inset: 0;
-      background-color: #fff0f5;
+      background-color: #ffe4ec;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -27,7 +27,7 @@
     }
 
     .loading-container {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(255, 192, 203, 0.3);
       backdrop-filter: blur(6px);
       padding: 30px;
       border-radius: 20px;
@@ -36,7 +36,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     }
 
     .loading-container img {
@@ -64,7 +64,7 @@
       to { width: 100%; }
     }
 
-    /* App principal con paredes laterales */
+    /* App principal */
     .main {
       display: none;
       flex-direction: column;
@@ -72,12 +72,33 @@
       justify-content: space-between;
       height: 100vh;
       padding: 20px;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.3);
       max-width: 500px;
       margin: 0 auto;
       border-radius: 20px;
       backdrop-filter: blur(4px);
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .top-bar {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar button {
+      background: rgba(255, 255, 255, 0.4);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      color: #4b004b;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
     }
 
     .tab {
@@ -98,7 +119,7 @@
     }
 
     .upgrade-section {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.6);
       padding: 15px;
       border-radius: 10px;
       margin-top: 10px;
@@ -119,7 +140,7 @@
       display: flex;
       justify-content: space-around;
       border-top: 2px solid #ffcce0;
-      background-color: rgba(255,255,255,0.1);
+      background-color: rgba(255,255,255,0.4);
       backdrop-filter: blur(10px);
       padding: 10px 0;
       width: 100%;
@@ -130,7 +151,7 @@
 
     .nav button {
       background: none;
-      color: #ffe0f7;
+      color: #8b0057;
       font-weight: bold;
       border: none;
       font-size: 16px;
@@ -151,6 +172,12 @@
 
   <!-- App principal -->
   <div class="main" id="mainApp">
+    
+    <div class="top-bar">
+      <button onclick="showTab('ajustes')">⚙️</button>
+      <button onclick="changeLanguage()">🌐</button>
+    </div>
+
     <div class="tab active" id="tab-pet">
       <h1>Santuario de Criaturas</h1>
       <div class="pet-img">
@@ -174,11 +201,18 @@
       <p>Aquí irán tus logros, nombre y medallas.</p>
     </div>
 
+    <div class="tab" id="tab-ajustes">
+      <h2>Ajustes</h2>
+      <p>Idioma actual: <span id="currentLang">Español</span></p>
+      <button onclick="toggleLanguage()">Cambiar a Inglés</button>
+    </div>
+
     <!-- Navegación -->
     <div class="nav">
       <button onclick="showTab('pet')">Lobby</button>
       <button onclick="showTab('inventario')">Inventario</button>
       <button onclick="showTab('perfil')">Perfil</button>
+      <button onclick="showTab('ajustes')">Ajustes</button>
     </div>
   </div>
 
@@ -221,6 +255,23 @@
         tab.classList.remove('active');
       });
       document.getElementById('tab-' + tabName).classList.add('active');
+    }
+
+    // Idioma
+    let currentLanguage = 'es';
+
+    function toggleLanguage() {
+      if (currentLanguage === 'es') {
+        document.getElementById('currentLang').innerText = 'English';
+        currentLanguage = 'en';
+      } else {
+        document.getElementById('currentLang').innerText = 'Español';
+        currentLanguage = 'es';
+      }
+    }
+
+    function changeLanguage() {
+      showTab('ajustes');
     }
   </script>
 </body>
