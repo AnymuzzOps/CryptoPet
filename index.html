@@ -66,14 +66,15 @@
   <button class="button">Reclamar Tokens</button>
 </section>
 
-<section class="card">
-  <h3>Conectar con World ID</h3>
-  <p class="small">Verifica tu identidad para reclamar recompensas</p>
-  <button class="button" onclick="alert('Simulación de conexión con World ID')">
-    Conectar con World ID
-  </button>
-</section>
+<script src="https://developer.worldcoin.org/v1/world-id-widget.js"></script>
 
+<world-id
+  action_id="verified-with-world-id"
+  signal="capicoin-user"
+  enableTelemetry
+  on_success="console.log('Verificación exitosa')"
+  on_error="console.error"
+></world-id>
 <script>
   // Simula un temporizador de 24 horas
   let seconds = 86399;
