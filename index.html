@@ -8,29 +8,29 @@
     body {
       margin: 0;
       font-family: 'Arial', sans-serif;
-      background-color: #fff6f0;
-      color: #3a1f1f;
+      background-color: #fdf8f3;
+      color: #4a3f35;
       text-align: center;
     }
     header {
       padding: 20px;
-      background-color: #ffe3d6;
-      border-bottom: 2px solid #f0cbb5;
+      background-color: #e6d3c0;
+      border-bottom: 2px solid #d8bfa7;
     }
     .logo {
-      font-size: 24px;
+      font-size: 28px;
       font-weight: bold;
     }
     .card {
       margin: 20px auto;
       padding: 20px;
       max-width: 400px;
-      background: #fff;
+      background: #ffffff;
       border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
     .button {
-      background-color: #ff87ab;
+      background-color: #a67c52;
       border: none;
       color: white;
       padding: 12px 20px;
@@ -38,50 +38,108 @@
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
+      transition: background 0.2s ease;
     }
     .button:hover {
-      background-color: #ff7098;
+      background-color: #8a6643;
     }
     .small {
       font-size: 14px;
-      color: #666;
+      color: #777;
+    }
+    ol {
+      padding-left: 20px;
+      text-align: left;
+    }
+    ol li {
+      margin: 8px 0;
+      font-size: 15px;
+    }
+    #loadingScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #f4e9df;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-size: 20px;
     }
   </style>
 </head>
 <body>
 
+<div id="loadingScreen">Cargando Capicoin...</div>
+
 <header>
   <div class="logo">Capicoin</div>
-  <p>Verified with World ID (simulado)</p>
+  <p>Relájate como una capibara</p>
 </header>
 
-<section class="card">
-  <h2>Balance</h2>
-  <p><strong>1.00 $CAPI</strong></p>
+<div id="appContent" style="display:none;">
 
-  <h3>Reclamo Diario</h3>
-  <p>Próximo reclamo disponible en:</p>
-  <div id="timer">23:59:59</div>
+  <section class="card">
+    <h2>Balance</h2>
+    <p><strong>1.00 $CAPI</strong></p>
 
-  <button class="button">Reclamar Tokens</button>
-</section>
+    <h3>Reclamo Diario</h3>
+    <p>Próximo reclamo disponible en:</p>
+    <div id="timer">23:59:59</div>
 
-<section class="card">
-  <h3>Verificación con World ID</h3>
-  <p class="small">Verifica tu identidad para comenzar a reclamar tus $CAPI</p>
+    <button class="button" onclick="alert('¡Aún no verificado! Verifica primero.')">Reclamar Tokens</button>
+  </section>
 
-  <script src="https://developer.worldcoin.org/v1/world-id-widget.js"></script>
+  <section class="card">
+    <h3>Verificación con World ID</h3>
+    <p class="small">Verifica tu identidad para comenzar a reclamar tus $CAPI</p>
 
-  <world-id
-    action_id="verified-with-world-id"
-    signal="capicoin-user"
-    enableTelemetry
-    on_success="console.log('Verificación exitosa')"
-    on_error="console.error"
-  ></world-id>
-</section>
+    <script src="https://developer.worldcoin.org/v1/world-id-widget.js"></script>
+    <world-id
+      action_id="verified-with-world-id"
+      signal="capicoin-user"
+      enableTelemetry
+      on_success="alert('Verificado con éxito. Ya puedes reclamar.')"
+      on_error="alert('Ocurrió un error en la verificación.')"
+    ></world-id>
+  </section>
+
+  <section class="card">
+    <h3>Tabla de Clasificación</h3>
+    <p class="small">Tu posición: #9999</p>
+    <ol>
+      <li><strong>capiking</strong> — 1,500,000.00 $CAPI</li>
+      <li><strong>capilover</strong> — 1,250,000.00 $CAPI</li>
+      <li><strong>relaxcapi</strong> — 1,000,000.00 $CAPI</li>
+      <li><strong>meme_capi</strong> — 800,000.00 $CAPI</li>
+      <li><strong>capisama</strong> — 700,000.00 $CAPI</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h3>Capicoin Premium</h3>
+    <p>Multiplica tus recompensas x3 pagando con 1 WLD.</p>
+    <button class="button" onclick="alert('Funcionalidad premium aún no disponible')">
+      Activar Premium
+    </button>
+    <p class="small">* Pronto disponible. ¡Permanece atento!</p>
+
+    <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+
+    <h3>Acerca de Capicoin</h3>
+    <p>Capicoin es una app divertida basada en World ID donde puedes reclamar tokens diarios, competir y relajarte como una capibara.</p>
+    <p>Síguenos:</p>
+    <p>
+      <a href="https://t.me/capicoin" target="_blank">Telegram</a> |
+      <a href="https://twitter.com/capicoin" target="_blank">Twitter</a>
+    </p>
+    <p class="small">Proyecto experimental con fines educativos.</p>
+  </section>
+
+</div>
+
 <script>
-  // Simula un temporizador de 24 horas
+  // Simula el temporizador de 24h
   let seconds = 86399;
   const timer = document.getElementById('timer');
   setInterval(() => {
@@ -91,26 +149,15 @@
     let s = String(seconds % 60).padStart(2, '0');
     timer.innerText = ${h}:${m}:${s};
   }, 1000);
+
+  // Pantalla de carga
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.getElementById("loadingScreen").style.display = "none";
+      document.getElementById("appContent").style.display = "block";
+    }, 2000); // 2 segundos de carga
+  });
 </script>
 
 </body>
 </html>
-<section class="card">
-  <h3>Capicoin Premium</h3>
-  <p>Multiplica tus recompensas x3 pagando con 1 WLD.</p>
-  <button class="button" onclick="alert('Funcionalidad premium aún no disponible')">
-    Activar Premium
-  </button>
-  <p class="small">* Pronto disponible. ¡Permanece atento!</p>
-
-  <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
-
-  <h3>Acerca de Capicoin</h3>
-  <p>Capicoin es una app divertida basada en World ID donde puedes reclamar tokens diarios, competir con otros y relajarte como una capibara.</p>
-  <p>Síguenos en nuestras redes sociales:</p>
-  <p>
-    <a href="https://t.me/capicoin" target="_blank">Telegram</a> |
-    <a href="https://twitter.com/capicoin" target="_blank">Twitter</a>
-  </p>
-  <p class="small">Proyecto experimental creado con fines educativos y entretenimiento.</p>
-</section>
