@@ -8,15 +8,15 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #f5eee6;
-      color: #3f352b;
+      background-color: #fdf6ec;
+      color: #3e3328;
       text-align: center;
     }
     #loadingScreen {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background-color: #f1e5d4;
+      background-color: #f4e9dd;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,7 +36,7 @@
       margin: 20px auto;
       padding: 20px;
       max-width: 400px;
-      background: #fff;
+      background: #ffffff;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
@@ -111,18 +111,18 @@
 </div>
 
 <script>
-  // Temporizador
+  // Temporizador de 24h
   let seconds = 86399;
-  const timer = document.getElementById('timer');
-  setInterval(() => {
-    seconds--;
+  const timer = () => {
     let h = String(Math.floor(seconds / 3600)).padStart(2, '0');
     let m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
     let s = String(seconds % 60).padStart(2, '0');
-    timer.innerText = ${h}:${m}:${s};
-  }, 1000);
+    document.getElementById('timer').innerText = ${h}:${m}:${s};
+    if (seconds > 0) seconds--;
+  };
+  setInterval(timer, 1000);
 
-  // Mostrar app y cargar World ID dinámicamente
+  // Mostrar app y cargar World ID
   document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       document.getElementById("loadingScreen").style.display = "none";
@@ -131,14 +131,33 @@
       const script = document.createElement('script');
       script.src = "https://developer.worldcoin.org/v1/world-id-widget.js";
       script.onload = () => {
-        const widget = document.createElement('world-id');
-        widget.setAttribute('action_id', 'verified-with-world-id');
-        widget.setAttribute('signal', 'capicoin-user');
-        widget.setAttribute('enableTelemetry', '');
-        widget.setAttribute('on_success', "alert('¡Verificado con éxito!')");
-        widget.setAttribute('on_error', "alert('Error en la verificación')");
-        document.getElementById('world-id-container').innerHTML = "";
-        document.getElementById('world-id-container').appendChild(widget);
+        try {
+          const widget = document.createElement('world-id');
+          widget.setAttribute('action_id', 'verified-with-world-id');
+          widget.setAttribute('signal', 'capicoin-user');
+          widget.setAttribute('enableTelemetry', '');
+
+          widget.addEventListener("success", (event) => {
+            alert('¡Verificación exitosa!');
+            console.log('World ID Success:', event);
+          });
+
+          widget.addEventListener("error", (event) => {
+            alert('Hubo un error en la verificación');
+            console.error('World ID Error:', event);
+          });
+
+          const container = document.getElementById('world-id-container');
+          container.innerHTML = "";
+          container.appendChild(widget);
+        } catch (e) {
+          console.error("Error al cargar el widget:", e);
+        }
+      };
+      script.onerror = () => {
+        console.error('No se pudo cargar el script de World ID');
+        document.getElementById('world-id-container').innerHTML =
+          '<p style="color:red;">Error cargando verificación. Intenta más tarde.</p>';
       };
       document.head.appendChild(script);
     }, 2000);
