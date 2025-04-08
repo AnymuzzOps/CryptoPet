@@ -1,107 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I'M RICH</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Capicoin</title>
   <style>
     body {
       margin: 0;
-      background: radial-gradient(ellipse at center, #111 0%, #000 100%);
-      font-family: 'Georgia', serif;
-      color: gold;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
-    }
-
-    h1 {
-      font-size: 4rem;
-      text-shadow: 0 0 10px gold;
-    }
-
-    .rich-button {
-      background: linear-gradient(145deg, #ffd700, #ffcc00);
-      border: none;
-      padding: 20px 40px;
-      font-size: 24px;
-      color: #000;
-      font-weight: bold;
-      border-radius: 20px;
-      box-shadow: 0 0 20px gold;
-      cursor: pointer;
-      margin-top: 30px;
-      transition: transform 0.2s ease;
-    }
-
-    .rich-button:hover {
-      transform: scale(1.05);
-    }
-
-    .certificate {
-      display: none;
-      margin-top: 40px;
-      padding: 30px;
-      border: 5px double gold;
-      background-color: rgba(255, 215, 0, 0.1);
-      border-radius: 10px;
-      max-width: 500px;
+      font-family: 'Arial', sans-serif;
+      background-color: #fff6f0;
+      color: #3a1f1f;
       text-align: center;
-      font-size: 1.2rem;
     }
-
-    .world-id {
-      margin-top: 20px;
+    header {
+      padding: 20px;
+      background-color: #ffe3d6;
+      border-bottom: 2px solid #f0cbb5;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .card {
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .button {
+      background-color: #ff87ab;
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      margin-top: 15px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .button:hover {
+      background-color: #ff7098;
+    }
+    .small {
+      font-size: 14px;
+      color: #666;
     }
   </style>
-  <script src="https://developer.worldcoin.org/sdk/world-id.js"></script>
 </head>
 <body>
 
-  <h1>I'M RICH</h1>
+<header>
+  <div class="logo">Capicoin</div>
+  <p>Verified with World ID (simulado)</p>
+</header>
 
-  <div class="world-id">
-    <div
-      id="world-id-container"
-      data-action-id="your-action-id"
-      data-signal="rich-user"
-      data-telemetry="true"
-    ></div>
-  </div>
+<section class="card">
+  <h2>Balance</h2>
+  <p><strong>1.00 $CAPI</strong></p>
 
-  <button class="rich-button" onclick="showCertificate()">BUY FOR $999</button>
+  <h3>Reclamo Diario</h3>
+  <p>Próximo reclamo disponible en:</p>
+  <div id="timer">23:59:59</div>
 
-  <div class="certificate" id="certificate">
-    <h2>Certificate of Digital Wealth</h2>
-    <p>This certifies that you are officially <strong>RICH</strong>.</p>
-    <p>You spent money on this app. Just because you could.</p>
-    <p>Congratulations, your ego is now verified.</p>
-  </div>
+  <button class="button">Reclamar Tokens</button>
+</section>
 
-  <script>
-    window.onload = function () {
-      window.worldID.init("world-id-container", {
-        enableTelemetry: true,
-        action_id: "your-action-id",
-        signal: "rich-user",
-        onSuccess: (result) => {
-          console.log("World ID verification success:", result);
-          document.querySelector('.rich-button').disabled = false;
-        },
-        onError: (error) => {
-          console.error("World ID verification failed:", error);
-        }
-      });
+<section class="card">
+  <h3>Conectar con World ID</h3>
+  <p class="small">Verifica tu identidad para reclamar recompensas</p>
+  <button class="button" onclick="alert('Simulación de conexión con World ID')">
+    Conectar con World ID
+  </button>
+</section>
 
-      document.querySelector('.rich-button').disabled = true;
-    };
-
-    function showCertificate() {
-      document.getElementById('certificate').style.display = 'block';
-    }
-  </script>
+<script>
+  // Simula un temporizador de 24 horas
+  let seconds = 86399;
+  const timer = document.getElementById('timer');
+  setInterval(() => {
+    seconds--;
+    let h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    let m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    let s = String(seconds % 60).padStart(2, '0');
+    timer.innerText = ${h}:${m}:${s};
+  }, 1000);
+</script>
 
 </body>
 </html>
