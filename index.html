@@ -66,15 +66,20 @@
   <button class="button">Reclamar Tokens</button>
 </section>
 
-<script src="https://developer.worldcoin.org/v1/world-id-widget.js"></script>
+<section class="card">
+  <h3>Verificación con World ID</h3>
+  <p class="small">Verifica tu identidad para comenzar a reclamar tus $CAPI</p>
 
-<world-id
-  action_id="verified-with-world-id"
-  signal="capicoin-user"
-  enableTelemetry
-  on_success="console.log('Verificación exitosa')"
-  on_error="console.error"
-></world-id>
+  <script src="https://developer.worldcoin.org/v1/world-id-widget.js"></script>
+
+  <world-id
+    action_id="verified-with-world-id"
+    signal="capicoin-user"
+    enableTelemetry
+    on_success="console.log('Verificación exitosa')"
+    on_error="console.error"
+  ></world-id>
+</section>
 <script>
   // Simula un temporizador de 24 horas
   let seconds = 86399;
