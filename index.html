@@ -7,10 +7,21 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #fdf8f3;
-      color: #4a3f35;
+      font-family: Arial, sans-serif;
+      background-color: #f5eee6;
+      color: #3f352b;
       text-align: center;
+    }
+    #loadingScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #f1e5d4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      font-size: 20px;
     }
     header {
       padding: 20px;
@@ -18,14 +29,14 @@
       border-bottom: 2px solid #d8bfa7;
     }
     .logo {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: bold;
     }
     .card {
       margin: 20px auto;
       padding: 20px;
       max-width: 400px;
-      background: #ffffff;
+      background: #fff;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
@@ -55,29 +66,18 @@
       margin: 8px 0;
       font-size: 15px;
     }
-    #loadingScreen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: #f4e9df;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      font-size: 20px;
-    }
   </style>
 </head>
 <body>
 
 <div id="loadingScreen">Cargando Capicoin...</div>
 
-<header>
-  <div class="logo">Capicoin</div>
-  <p>Relájate como una capibara</p>
-</header>
-
 <div id="appContent" style="display:none;">
+
+  <header>
+    <div class="logo">Capicoin</div>
+    <p>Relájate como una capibara</p>
+  </header>
 
   <section class="card">
     <h2>Balance</h2>
@@ -87,12 +87,13 @@
     <p>Próximo reclamo disponible en:</p>
     <div id="timer">23:59:59</div>
 
-    <button class="button" onclick="alert('¡Aún no verificado! Verifica primero.')">Reclamar Tokens</button>
+    <button class="button" onclick="alert('¡Verificación requerida!')">Reclamar Tokens</button>
   </section>
 
   <section class="card">
     <h3>Verificación con World ID</h3>
-    <p class="small">Verifica tu identidad para comenzar a reclamar tus $CAPI</p>
+    <p class="small">Verifica tu identidad para reclamar tus $CAPI</p>
+    <div id="world-id-container">Cargando verificación...</div>
   </section>
 
   <section class="card">
@@ -107,30 +108,10 @@
     </ol>
   </section>
 
-  <section class="card">
-    <h3>Capicoin Premium</h3>
-    <p>Multiplica tus recompensas x3 pagando con 1 WLD.</p>
-    <button class="button" onclick="alert('Funcionalidad premium aún no disponible')">
-      Activar Premium
-    </button>
-    <p class="small">* Pronto disponible. ¡Permanece atento!</p>
-
-    <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
-
-    <h3>Acerca de Capicoin</h3>
-    <p>Capicoin es una app divertida basada en World ID donde puedes reclamar tokens diarios, competir y relajarte como una capibara.</p>
-    <p>Síguenos:</p>
-    <p>
-      <a href="https://t.me/capicoin" target="_blank">Telegram</a> |
-      <a href="https://twitter.com/capicoin" target="_blank">Twitter</a>
-    </p>
-    <p class="small">Proyecto experimental con fines educativos.</p>
-  </section>
-
 </div>
 
 <script>
-  // Simula el temporizador de 24h
+  // Temporizador
   let seconds = 86399;
   const timer = document.getElementById('timer');
   setInterval(() => {
@@ -141,28 +122,28 @@
     timer.innerText = ${h}:${m}:${s};
   }, 1000);
 
-  // Pantalla de carga (actualizado)
+  // Mostrar app y cargar World ID dinámicamente
   document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       document.getElementById("loadingScreen").style.display = "none";
       document.getElementById("appContent").style.display = "block";
-// Cargar el widget dinámicamente
-const script = document.createElement('script');
-script.src = "https://developer.worldcoin.org/v1/world-id-widget.js";
-script.onload = () => {
-  const widget = document.createElement('world-id');
-  widget.setAttribute('action_id', 'verified-with-world-id');
-  widget.setAttribute('signal', 'capicoin-user');
-  widget.setAttribute('enableTelemetry', '');
-  widget.setAttribute('on_success', "alert('Verificación exitosa')");
-  widget.setAttribute('on_error', "alert('Error en verificación')");
-  document.getElementById('world-id-container').appendChild(widget);
-};
-document.head.appendChild(script);
-    }, 2000); // 2 segundos de carga
-  });
+
+      const script = document.createElement('script');
+      script.src = "https://developer.worldcoin.org/v1/world-id-widget.js";
+      script.onload = () => {
+        const widget = document.createElement('world-id');
+        widget.setAttribute('action_id', 'verified-with-world-id');
+        widget.setAttribute('signal', 'capicoin-user');
+        widget.setAttribute('enableTelemetry', '');
+        widget.setAttribute('on_success', "alert('¡Verificado con éxito!')");
+        widget.setAttribute('on_error', "alert('Error en la verificación')");
+        document.getElementById('world-id-container').innerHTML = "";
+        document.getElementById('world-id-container').appendChild(widget);
+      };
+      document.head.appendChild(script);
+    }, 2000);
+  });
 </script>
 
 </body>
 </html>
-
